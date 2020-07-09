@@ -1,0 +1,25 @@
+$ORIGIN consulate.scot.
+$TTL 3600
+
+@	SOA	ns1.irl.net.	iain.learmonth.me. (
+	2020032006	; serial number
+	28800	; Refresh
+	7200	; Retry
+	864000	; Expire
+	86400	; Min TTL
+	)
+
+	NS	ns1.irl1.net.
+	NS	ns2.irl1.net.
+	NS	ns6.gandi.net.
+
+	TXT	"v=spf1 mx -all"
+	SPF	"v=spf1 mx -all"
+
+	A	148.251.95.71
+www	CNAME	consulate.scot.
+
+mc	A	51.178.165.122
+radio	CNAME	lenticular.cyberdelia.space.
+rave	A	178.79.157.77
+modulate	CNAME	modulate.mgdm.net.

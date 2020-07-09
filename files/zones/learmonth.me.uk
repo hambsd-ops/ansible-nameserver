@@ -1,0 +1,27 @@
+$ORIGIN learmonth.me.uk.
+$TTL 3600
+
+@	SOA	ns1.irl.net.	iain.learmonth.me. (
+	2020032005	; serial number
+	28800	; Refresh
+	7200	; Retry
+	864000	; Expire
+	86400	; Min TTL
+	)
+
+	NS	ns1.irl1.net.
+	NS	ns2.irl1.net.
+	NS	ns6.gandi.net.
+
+	MX	10 in1-smtp.messagingengine.com.
+	MX	20 in2-smtp.messagingengine.com.
+
+	TXT	"v=spf1 include:spf.messagingengine.com ?all"
+
+	A	148.251.95.71
+
+mesmtp._domainkey	CNAME	mesmtp.learmonth.me.uk.dkim.fmhosted.com.
+fm1._domainkey		CNAME	fm1.learmonth.me.uk.dkim.fmhosted.com.
+fm2._domainkey		CNAME	fm2.learmonth.me.uk.dkim.fmhosted.com.
+fm3._domainkey		CNAME	fm3.learmonth.me.uk.dkim.fmhosted.com.
+

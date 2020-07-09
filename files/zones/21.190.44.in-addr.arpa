@@ -1,0 +1,19 @@
+$ORIGIN 21.190.44.in-addr.arpa.
+$TTL 3600
+
+@       SOA     ns1.irl.net.    iain.learmonth.me. (
+        2020032101      ; serial number
+        28800   ; Refresh
+        7200    ; Retry
+        864000  ; Expire
+        86400   ; Min TTL
+        )
+
+        NS      ns1.irl1.net.
+        NS      ns2.irl1.net.
+
+1	IN	PTR	lon1.hambsd.org.
+
+17	IN	PTR	mb7vx.hambsd.org.
+
+33	IN	PTR	mb7uar.hambsd.org.

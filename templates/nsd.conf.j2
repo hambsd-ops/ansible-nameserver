@@ -1,0 +1,23 @@
+server:
+	hide-version: yes
+	verbosity: 1
+	database: "" # disable database
+
+remote-control:
+	control-enable: yes
+	control-interface: /var/run/nsd.sock
+
+key:
+	name: "tsig1.irl1.net."
+	algorithm: hmac-sha256
+	secret: "{{ ns_tsig1_secret }}"
+
+{% for zone in groups['ns_master_zones'] %}
+zone:
+	name: "{{ zone }}"
+	zonefile: "master/{{ zone }}"
+	notify: 46.23.92.86 tsig1.irl1.net.     # ns2.irl1.net
+	notify: 217.70.177.40 NOKEY             # ns6.gandi.net
+	provide-xfr: 46.23.92.86 tsig1.irl1.net.
+	provide-xfr: 217.70.177.40 NOKEY
+{% endfor %}
