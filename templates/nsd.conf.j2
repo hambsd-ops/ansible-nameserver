@@ -7,12 +7,14 @@ remote-control:
 	control-enable: yes
 	control-interface: /var/run/nsd.sock
 
+{% for key in ns_tsig_keys %}
 key:
-	name: "tsig1.irl1.net."
-	algorithm: hmac-sha256
-	secret: "{{ ns_tsig1_secret }}"
+	name: "{{ key['name'] }}"
+	algorithm: "{{ key['algorithm'] }}"
+	secret: "{{ key['secret'] }}"
+{% endfor %}
 
-{% for zone in groups['ns_master_zones'] %}
+{% for zone in groups['ns_primary_zones'] %}
 zone:
 	name: "{{ zone }}"
 	zonefile: "master/{{ zone }}"

@@ -1,7 +1,4 @@
 ---
-- name: import tsig secret
-  include_vars:
-    file: "ns_tsig.yml"
 - name: install nsd.conf
   template:
     src: "nsd.conf.j2"
@@ -11,14 +8,21 @@
     group: _nsd
   notify:
   - reload nsd
+- name: ensure zone file directory exists
+  file:
+    path: /var/nsd/zones/data
+    state: directory
+    mode: 0755
+    owner: root
+    group: _nsd
 - name: install zones
   copy:
     src: "zones/{{ item }}"
-    dest: "/var/nsd/zones/master/{{ item }}"
+    dest: "/var/nsd/zones/data/{{ item }}"
     mode: 0640
     owner: root
     group: _nsd
-  with_items: "{{ groups['ns_master_zones'] }}"
+  with_items: "{{ groups['ns_primary_zones'] }}"
   notify:
   - reload nsd
 - name: enable nsd
