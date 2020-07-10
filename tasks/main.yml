@@ -17,7 +17,7 @@
     group: _nsd
 - name: install zones
   copy:
-    src: "zones/{{ item['name'] }}"
+    src: "dns_zones/{{ item['name'] }}"
     dest: "/var/nsd/zones/data/{{ item['name'] }}"
     mode: 0640
     owner: root
