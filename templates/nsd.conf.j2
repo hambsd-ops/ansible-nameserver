@@ -16,13 +16,46 @@ key:
 	secret: "{{ key['secret'] }}"
 {% endfor %}
 
+{% if ns_type == "primary" %}
 {% for zone in ns_primary_zones %}
 zone:
 	name: "{{ zone['name'] }}"
 	zonefile: "data/{{ zone['name'] }}"
-{% for secondary in zone['secondaries'] %}
+{% for host in groups["ns"] %}
+{% if hostvars[host]["ns_type"] == "secondary" %}
+	notify: {{ hostvars[host]["vmip4"] }} tsig1.irl1.net.
+	provide-xfr: {{ hostvars[host]["vmip4"] }} tsig1.irl1.net.
+{% endif %}
+{% endfor %}
+{% for secondary in zone.get('secondaries', []) %}
 	notify: {{ secondary['address'] }} {{ secondary['key'] }}
 	provide-xfr: {{ secondary['address'] }} {{ secondary['key'] }}
 {% endfor %}
 
 {% endfor %}
+{% endif %}
+
+{% if ns_type == "secondary" %}
+{% for zone in ns_primary_zones %}
+zone:
+	name: "{{ zone['name'] }}"
+	zonefile: "cache/{{ zone['name'] }}"
+{% for host in groups["ns"] %}
+{% if hostvars[host]["ns_type"] == "primary" %}
+	allow-notify: {{ hostvars[host]["vmip4"] }} tsig1.irl1.net.
+	request-xfr: {{ hostvars[host]["vmip4"] }} tsig1.irl1.net.
+{% endif %}
+{% endfor %}
+{% endfor %}
+
+{% for zone in ns_secondary_zones %}
+zone:
+	name: "{{ zone['name'] }}"
+	zonefile: "cache/{{ zone['name'] }}"
+{% for primary in zone['primaries'] %}
+	allow-notify: {{ primary['address'] }} {{ primary['key'] }}
+	request-xfr: {{ primary['address'] }} {{ primary['key'] }}
+{% endfor %}
+
+{% endfor %}
+{% endif %}
