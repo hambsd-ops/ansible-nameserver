@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  role_name: primary-nameserver
+  role_name: nameserver
   author: Iain R. Learmonth
-  description: Primary nameserver configuration
+  description: Primary and secondary nameserver configuration
   license: BSD-2-clause
   min_ansible_version: 1.2
   platforms:
