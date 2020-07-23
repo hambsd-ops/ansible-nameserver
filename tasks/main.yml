@@ -15,6 +15,15 @@
     mode: 0755
     owner: root
     group: _nsd
+  when: ns_type == "primary"
+- name: ensure zone cache directory exists
+  file:
+    path: /var/nsd/zones/cache
+    state: directory
+    mode: 0755
+    owner: root
+    group: _nsd
+  when: ns_type == "secondary"
 - name: install zones
   copy:
     src: "dns_zones/{{ item['name'] }}"
