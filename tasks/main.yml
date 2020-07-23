@@ -23,6 +23,7 @@
     owner: root
     group: _nsd
   with_items: "{{ ns_primary_zones }}"
+  when: ns_type == "primary"
   notify:
   - reload nsd
 - name: enable nsd
